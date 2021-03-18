@@ -28,7 +28,7 @@ class TrainController {      // Controller
                     try {
                         search = filterBy4Class(storage.getModels());
                         System.out.print(search);
-                    } catch (RuntimeException ex)
+                    } catch (ItemNotFoundException ex)
                     {
                         view.printException(ex);
                     }
@@ -48,7 +48,7 @@ class TrainController {      // Controller
                     try {
                         search = filterByDestTime(destination, time, storage.getModels());
                         System.out.print(search);
-                    } catch (RuntimeException ex)
+                    } catch (ItemNotFoundException ex)
                     {
                         view.printException(ex);
                     }

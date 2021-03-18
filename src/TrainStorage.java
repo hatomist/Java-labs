@@ -41,11 +41,12 @@ class TrainStorage {
         return models;
     }
 
+    int len() {
+        return models.length;
+    }
+
     @Override
     public String toString() {
-        if (models.length == 0)
-            return "Нет таких поездов!\n";
-
         StringBuilder ret = new StringBuilder();
         ret.append("-".repeat(75))
                 .append('\n')

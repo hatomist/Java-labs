@@ -1,4 +1,5 @@
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 class TrainController {      // Controller
     private TrainView view;
@@ -24,14 +25,33 @@ class TrainController {      // Controller
                     break;
                 case 2:
                     TrainStorage search;
-                    search = filterBy4Class(storage.getModels());
-                    System.out.print(search);
+                    try {
+                        search = filterBy4Class(storage.getModels());
+                        System.out.print(search);
+                    } catch (RuntimeException ex)
+                    {
+                        view.printException(ex);
+                    }
                     break;
                 case 3:
                     String destination = view.destinationPrompt();
-                    LocalTime time = view.timePrompt();
-                    search = filterByDestTime(destination, time, storage.getModels());
-                    System.out.print(search);
+                    LocalTime time;
+
+                    while (true) {
+                        try {
+                            time = view.timePrompt();
+                            break;
+                        } catch (DateTimeParseException ex) {
+                            view.printInvalidInput();
+                        }
+                    }
+                    try {
+                        search = filterByDestTime(destination, time, storage.getModels());
+                        System.out.print(search);
+                    } catch (RuntimeException ex)
+                    {
+                        view.printException(ex);
+                    }
                     break;
                 case 4:
                     System.exit(0);
@@ -49,6 +69,8 @@ class TrainController {      // Controller
                 filtered_trains.add(train);
             }
         }
+        if (filtered_trains.len() == 0)
+            throw new ItemNotFoundException();
         return filtered_trains;
     }
 
@@ -60,6 +82,8 @@ class TrainController {      // Controller
                 filtered_trains.add(train);
             }
         }
+        if (filtered_trains.len() == 0)
+            throw new ItemNotFoundException();
         return filtered_trains;
     }
 

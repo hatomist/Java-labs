@@ -11,6 +11,8 @@ class TrainView {        // View
                 4 - выход из программы
                 """;
 
+    String timeFormat = "HH:MM";
+
     TrainView() {
         in = new Scanner(System.in);
     }
@@ -36,4 +38,13 @@ class TrainView {        // View
         System.out.println("Введите время отправления (в формате HH:MM)");
         return LocalTime.parse(in.nextLine());
     }
+
+    void printException(RuntimeException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    void printInvalidInput() {
+        System.out.printf("Неправильный формат ввода!%n");
+    }
+
 }
